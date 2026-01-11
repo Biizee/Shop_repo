@@ -85,12 +85,15 @@ def total_orders_per_customer():
     cursor.execute("""
         SELECT customers.first_name, customers.last_name, COUNT(orders.order_id)
         FROM customers
-        INNER JOIN orders ON customers.customers_id = orders.customers_id
-        GROUP BY customers.customer.id
+        INNER JOIN orders ON customers.customer_id = orders.customer_id
+        GROUP BY customers.customer_id
     """)
     result = cursor.fetchall()
     for r in result:
-        print(r)
+        if r[2] == 1:
+            print(f"Користувач {r[0]} {r[1]} купив(ла) {r[2]} товар" )
+        else:
+            print(f"Користувач {r[0]} {r[1]} купив(ла) {r[2]} товарів" )
 
 
 def avarage_price():
@@ -114,6 +117,16 @@ def popular_category():
     """)
     result = cursor.fetchone()[0]
     print(f"\nНайбільш популярна категорія - {result}")
+
+def total_products_per_category():
+    cursor.execute("""
+        SELECT category, COUNT(product_id)
+        FROM products
+        GROUP BY category
+    """)
+    result = cursor.fetchall()
+    for r in result:
+        print(f"{r[0]} - {r[1]}")
 
 
 while True:
@@ -144,3 +157,6 @@ while True:
     
     elif choice == 4:
         popular_category()
+    
+    elif choice == 5:
+        total_products_per_category()

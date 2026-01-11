@@ -1,1 +1,1 @@
-# Shop_repo
+# Internet shop project

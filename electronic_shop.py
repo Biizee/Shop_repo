@@ -130,7 +130,7 @@ while True:
     
     choice = int(input("Ваш вибір:\n"))
     
-    if choice == 6:
+    if choice == 7:
         break
     
     elif choice == 1:

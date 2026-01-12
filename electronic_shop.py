@@ -128,6 +128,12 @@ def total_products_per_category():
     for r in result:
         print(f"{r[0]} - {r[1]}")
 
+def update_prices_to_smartfones():
+    cursor.execute("""
+        UPDATE products SET price=ROUND(price*1.1) WHERE category = 'смартфони'
+    """)
+    conn.commit()
+    print("Ціни були змінені!")
 
 while True:
     
@@ -160,3 +166,6 @@ while True:
     
     elif choice == 5:
         total_products_per_category()
+
+    elif choice == 6:
+        update_prices_to_smartfones()

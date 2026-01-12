@@ -128,9 +128,16 @@ def total_products_per_category():
     for r in result:
         print(f"{r[0]} - {r[1]}")
 
-def update_prices_to_smartfones():
+def asc_prices_to_smartfones():
     cursor.execute("""
         UPDATE products SET price=ROUND(price*1.1) WHERE category = 'смартфони'
+    """)
+    conn.commit()
+    print("Ціни були змінені!")
+
+def desc_prices_to_smartfones():
+    cursor.execute("""
+        UPDATE products SET price=ROUND(price/1.1) WHERE category = 'смартфони'
     """)
     conn.commit()
     print("Ціни були змінені!")
@@ -144,12 +151,16 @@ while True:
 4. Найбільш популярна категорія товарів.
 5. Загальна кількість товарів кожної категорії.
 6. Оновлення цін (ціни на смартфони збільшаться на 10%).
-7. Завершити роботу.
+7. Оновлення цін (ціни на смартфони зменшаться на 10%).
+8. Завершити роботу.
 ------------------------------------------------------------\n""")
     
-    choice = int(input("Ваш вибір:\n"))
+    try:
+        choice = int(input("Ваш вибір:\n"))
+    except ValueError:
+        print("\nВиникла помилка, виберіть опцію ще раз!\n")
     
-    if choice == 7:
+    if choice == 8:
         break
     
     elif choice == 1:
@@ -168,4 +179,10 @@ while True:
         total_products_per_category()
 
     elif choice == 6:
-        update_prices_to_smartfones()
+        asc_prices_to_smartfones()
+    
+    elif choice == 7:
+        desc_prices_to_smartfones()
+
+    elif choice > 8:
+        print("\nТакої опції не існує, виберіть опцію ще раз!\n")
